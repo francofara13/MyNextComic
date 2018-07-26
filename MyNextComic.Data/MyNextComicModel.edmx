@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MyNextComicModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MyNextComic.dbo.Comics' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Comics">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Issue_Number" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Release_date" />
+          </Key>
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="varchar(max)" />
+          <Property Name="Issue_Number" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="Release_date" Type="date" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MyNextComic.dbo.Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="Password" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="MyNextComicModelStoreContainer">
+          <EntitySet Name="Comics" EntityType="Self.Comics" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[Comics].[Description] AS [Description], 
+[Comics].[Id] AS [Id], 
+[Comics].[Image] AS [Image], 
+[Comics].[Issue_Number] AS [Issue_Number], 
+[Comics].[Name] AS [Name], 
+[Comics].[Release_date] AS [Release_date]
+FROM [dbo].[Comics] AS [Comics]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Users" EntityType="Self.Users" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[Users].[Id] AS [Id], 
+[Users].[Username] AS [Username], 
+[Users].[Email] AS [Email], 
+[Users].[Password] AS [Password]
+FROM [dbo].[Users] AS [Users]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MyNextComicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Comics">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Issue_Number" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Release_date" />
+          </Key>
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Issue_Number" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Release_date" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="Password" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="MyNextComicEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Comics" EntityType="Self.Comics" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MyNextComicModelStoreContainer" CdmEntityContainer="MyNextComicEntities">
+          <EntitySetMapping Name="Comics">
+            <EntityTypeMapping TypeName="MyNextComicModel.Comics">
+              <MappingFragment StoreEntitySet="Comics">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Issue_Number" ColumnName="Issue_Number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Release_date" ColumnName="Release_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MyNextComicModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
