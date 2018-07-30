@@ -50,55 +50,61 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comics.cs">
-      <DependentUpon>MyNextComicModel.tt</DependentUpon>
+      <DependentUpon>MyNextComicEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="ComicsContext.cs" />
-    <Compile Include="MyNextComicModel.Context.cs">
+    <Compile Include="Mappers\MyNextComicMapper.cs" />
+    <Compile Include="MyNextComicEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MyNextComicModel.Context.tt</DependentUpon>
+      <DependentUpon>MyNextComicEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="MyNextComicModel.cs">
+    <Compile Include="MyNextComicEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MyNextComicModel.tt</DependentUpon>
+      <DependentUpon>MyNextComicEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="MyNextComicModel.Designer.cs">
+    <Compile Include="MyNextComicEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MyNextComicModel.edmx</DependentUpon>
+      <DependentUpon>MyNextComicEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Users.cs">
-      <DependentUpon>MyNextComicModel.tt</DependentUpon>
+      <DependentUpon>MyNextComicEntities.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="MyNextComicModel.edmx">
+    <EntityDeploy Include="MyNextComicEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MyNextComicModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>MyNextComicEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="MyNextComicModel.edmx.diagram">
-      <DependentUpon>MyNextComicModel.edmx</DependentUpon>
+    <None Include="MyNextComicEntities.edmx.diagram">
+      <DependentUpon>MyNextComicEntities.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MyNextComicModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MyNextComicModel.edmx</DependentUpon>
-      <LastGenOutput>MyNextComicModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="MyNextComicModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MyNextComicModel.edmx</DependentUpon>
-      <LastGenOutput>MyNextComicModel.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <ProjectReference Include="..\MyNextComic.Contracts\MyNextComic.Contracts.csproj">
+      <Project>{F2820FF1-C666-4CFF-B27E-CCFD781369BF}</Project>
+      <Name>MyNextComic.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MyNextComicEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MyNextComicEntities.edmx</DependentUpon>
+      <LastGenOutput>MyNextComicEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="MyNextComicEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MyNextComicEntities.edmx</DependentUpon>
+      <LastGenOutput>MyNextComicEntities.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

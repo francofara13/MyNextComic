@@ -19,6 +19,6 @@ namespace MyNextComic.Data
         public string Image { get; set; }
         public int Issue_Number { get; set; }
         public string Name { get; set; }
-        public System.DateTime Release_date { get; set; }
+        public Nullable<System.DateTime> Release_date { get; set; }
     }
 }

@@ -5,30 +5,20 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="MyNextComicModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MyNextComic.dbo.Comics' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Comics">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="Issue_Number" />
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="Release_date" />
           </Key>
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Image" Type="varchar(max)" />
           <Property Name="Issue_Number" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar(max)" Nullable="false" />
-          <Property Name="Release_date" Type="date" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" />
+          <Property Name="Release_date" Type="date" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MyNextComic.dbo.Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="Username" />
-            <PropertyRef Name="Email" />
-            <PropertyRef Name="Password" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
@@ -36,24 +26,8 @@ warning 6002: The table/view 'MyNextComic.dbo.Users' does not have a primary key
           <Property Name="Password" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityContainer Name="MyNextComicModelStoreContainer">
-          <EntitySet Name="Comics" EntityType="Self.Comics" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Comics].[Description] AS [Description], 
-[Comics].[Id] AS [Id], 
-[Comics].[Image] AS [Image], 
-[Comics].[Issue_Number] AS [Issue_Number], 
-[Comics].[Name] AS [Name], 
-[Comics].[Release_date] AS [Release_date]
-FROM [dbo].[Comics] AS [Comics]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Users" EntityType="Self.Users" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Users].[Id] AS [Id], 
-[Users].[Username] AS [Username], 
-[Users].[Email] AS [Email], 
-[Users].[Password] AS [Password]
-FROM [dbo].[Users] AS [Users]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Comics" EntityType="Self.Comics" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -63,23 +37,17 @@ FROM [dbo].[Users] AS [Users]</DefiningQuery>
         <EntityType Name="Comics">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="Issue_Number" />
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="Release_date" />
           </Key>
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Issue_Number" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Release_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Release_date" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="Username" />
-            <PropertyRef Name="Email" />
-            <PropertyRef Name="Password" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
