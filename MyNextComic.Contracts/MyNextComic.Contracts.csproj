@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6718323A-E9FB-46BC-A218-F465F4B6B4AD}</ProjectGuid>
+    <ProjectGuid>{F2820FF1-C666-4CFF-B27E-CCFD781369BF}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>MyNextComic.Contracts</RootNamespace>
     <AssemblyName>MyNextComic.Contracts</AssemblyName>

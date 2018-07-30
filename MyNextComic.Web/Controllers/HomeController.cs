@@ -1,13 +1,9 @@
-﻿using RestSharp;
-using RestSharp.Authenticators;
+﻿using MyNextComic.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Newtonsoft.Json;
-using MyNextComic.Contracts.Entities;
-using MyNextComic.Services;
 
 namespace MyNextComic.Web.Controllers
 {
@@ -25,23 +21,19 @@ namespace MyNextComic.Web.Controllers
             return View();
         }
 
-        public JsonResult GetComics()
+        public ActionResult Contact()
         {
-            ComicsService service = new ComicsService();
-            service.InsertComics();
-            
-            return Json(null, JsonRequestBehavior.AllowGet);
+            ViewBag.Message = "Your contact page.";
+
+            return View();
         }
 
-        public class issueResponse
+        public JsonResult InsertComics()
         {
-            public List<Issue> results { get; set; }
-            public string error { get; set; }
-            public int limit { get; set; }
-            public int offset { get; set; }
-            public int number_of_page_results { get; set; }
-            public int number_of_total_results { get; set; }
-            public int status_code { get; set; }
+            var comicService = new ComicService();
+            var result = comicService.InsertComics();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

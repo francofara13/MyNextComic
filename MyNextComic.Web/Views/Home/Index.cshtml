@@ -1,14 +1,7 @@
-﻿<div class="col-md-12">
-	<button onclick="getComics()"></button>
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <button onclick="insertComics()">Cargar</button>
 </div>
-
-<script>
-
-	function getComics() {
-		$.ajax({
-			url: '/Home/GetComics',
-			type: 'GET',
-			async: false
-		})
-	}
-</script>
