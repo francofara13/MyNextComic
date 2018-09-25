@@ -1,0 +1,20 @@
+﻿@model MyNextComic.Web.Models.Account.AccountModel
+
+@using (Html.BeginForm("SignUp", "Account", FormMethod.Post))
+{
+	<div class="col-md-12 form-group">
+		<span>@Html.LabelFor(x => x.UserName)</span><br />
+		@Html.TextBoxFor(x => x.UserName, new { Class = "col-md-8" })
+	</div>
+	<div class="col-md-12 form-group">
+		<span>@Html.LabelFor(x => x.Password)</span><br />
+		@Html.TextBoxFor(x => x.Password, new { Class = "col-md-8", type = "password" })
+	</div>
+	<div class="col-md-12 form-group">
+		<span>@Html.LabelFor(x => x.Email)</span><br />
+		@Html.TextBoxFor(x => x.Email, new { Class = "col-md-8", type = "email" })
+	</div>
+	<div class="col-md-12 form-group">
+		<button class="btn btn-primary">Registrarse</button>
+	</div>
+}

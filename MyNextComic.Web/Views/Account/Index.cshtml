@@ -1,0 +1,24 @@
+﻿@using MyNextComic.Web.Models.Account
+
+@{
+	ViewBag.Title = "Account";
+}
+<div class="row">
+	<div class="col-md-6">
+		<div class="card text-white">
+			<div class="card-header">LogIn</div>
+			<div class="card-body">
+				@{Html.RenderPartial("_LogIn", new AccountModel());}
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="card text-white">
+			<div class="card-header">SignUp</div>
+			<div class="card-body">
+				@{Html.RenderPartial("_SignUp", new AccountModel());}
+			</div>
+		</div>
+	</div>
+</div>
+

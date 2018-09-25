@@ -7,3 +7,13 @@
         }
     });
 }
+
+function getRecommendation() {
+    $.ajax({
+        type: "GET",
+        url: "../Home/GetRecommendation",
+        success: function (result) {
+            alert(result);
+        }
+    });
+}
