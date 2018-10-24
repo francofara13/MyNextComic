@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
 namespace MyNextComic.Web.Models.Account
@@ -16,8 +12,5 @@ namespace MyNextComic.Web.Models.Account
         [DisplayName("Contraseña")]
         [Required]
         public string Password { get; set; }
-
-        [DisplayName("Email")]
-        public string Email { get; set; }
     }
 }

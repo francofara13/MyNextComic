@@ -1,18 +1,22 @@
-﻿@model MyNextComic.Web.Models.Account.AccountModel
+﻿@model MyNextComic.Web.Models.Account.SignupModel
 
 @using (Html.BeginForm("SignUp", "Account", FormMethod.Post))
 {
+	@Html.AntiForgeryToken()
 	<div class="col-md-12 form-group">
 		<span>@Html.LabelFor(x => x.UserName)</span><br />
-		@Html.TextBoxFor(x => x.UserName, new { Class = "col-md-8" })
+		<span>@Html.TextBoxFor(x => x.UserName, new { Class = "col-md-8" })</span><br />
+		<span class="text-danger">@Html.ValidationMessageFor(x => x.UserName)</span>
 	</div>
 	<div class="col-md-12 form-group">
 		<span>@Html.LabelFor(x => x.Password)</span><br />
-		@Html.TextBoxFor(x => x.Password, new { Class = "col-md-8", type = "password" })
+		<span>@Html.TextBoxFor(x => x.Password, new { Class = "col-md-8", type = "password" })</span><br />
+		<span class="text-danger">@Html.ValidationMessageFor(x => x.Password)</span>
 	</div>
 	<div class="col-md-12 form-group">
 		<span>@Html.LabelFor(x => x.Email)</span><br />
-		@Html.TextBoxFor(x => x.Email, new { Class = "col-md-8", type = "email" })
+		<span>@Html.TextBoxFor(x => x.Email, new { Class = "col-md-8", type = "email" })</span><br />
+		<span class="text-danger">@Html.ValidationMessageFor(x => x.Email)</span>
 	</div>
 	<div class="col-md-12 form-group">
 		<button class="btn btn-primary">Registrarse</button>

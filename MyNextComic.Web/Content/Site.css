@@ -22,3 +22,56 @@ select,
 textarea {
     max-width: 280px;
 }
+@font-face {
+	font-family: "Yew Basturd";
+	src: url(Fonts/YEWBN___.ttf);
+}
+
+.auto-style1 {
+	width: 100%;
+}
+
+.auto-style2 {
+	text-align: center;
+}
+
+.auto-style3 {
+	text-align: center;
+	height: 33px;
+}
+
+.auto-style4 {
+	height: 33px;
+}
+
+.auto-style5 {
+	height: 39px;
+}
+
+#Reset1 {
+	text-align: left;
+	height: 35px;
+	width: 72px;
+}
+
+.comic-title {
+	font-family: 'Yew Basturd';
+	font-size: small;
+}
+
+.comic-title-big {
+	font-family: 'Yew Basturd';
+	font-size: xx-large;
+	text-align: center;
+}
+
+.comic-wrapper {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: center;
+}
+
+.float-right {
+	float: right;
+}

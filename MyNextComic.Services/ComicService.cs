@@ -125,5 +125,44 @@ namespace MyNextComic.Services
             return context;
         }
 
+        public List<Issue> GetComics(string searchString)
+        {
+            var result = new List<Issue>();
+
+            using (TransactionScope scope = new TransactionScope())
+            {
+                MyNextComicEntities context = null;
+
+                try
+                {
+                    context = new MyNextComicEntities();
+                    context.Configuration.AutoDetectChangesEnabled = false;
+                    var comics = new List<Comics>();
+                    if (String.IsNullOrEmpty(searchString))
+                    {
+                        comics = context.Comics.OrderBy(x => x.Id).ToList();
+                    }
+                    else
+                    {
+                        comics = context.Comics.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).OrderBy(x => x.Id).ToList();
+                    }
+                    
+                    var mapper = new MyNextComicMapper();
+
+                    foreach (var comic in comics)
+                    {
+                        result.Add(mapper.MapIssue(comic));
+                    }
+                }
+                catch (DbEntityValidationException e)
+                {
+                }
+
+                context.Dispose();
+                scope.Complete();
+            }
+            
+            return result;
+        }
     }
 }

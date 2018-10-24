@@ -58,6 +58,12 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -122,11 +128,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ComicsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account\AccountModel.cs" />
+    <Compile Include="Models\Comic\ComicGridModel.cs" />
+    <Compile Include="Models\Account\SignupModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +145,8 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\thumbnail-gallery.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -168,6 +179,10 @@
     <Content Include="Content\_variables.scss" />
     <Content Include="Content\_bootswatch.scss" />
     <Content Include="Content\Bundled.scss" />
+    <Content Include="Content\Fonts\YEWBBI__.ttf" />
+    <Content Include="Content\Fonts\YEWBB___.ttf" />
+    <Content Include="Content\Fonts\YEWBI___.ttf" />
+    <Content Include="Content\Fonts\YEWBN___.ttf" />
     <None Include="Scripts\jquery-3.3.1-vsdoc.js" />
     <Content Include="Scripts\Home\Home.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -218,6 +233,10 @@
     <Content Include="Views\Account\_SignUp.cshtml" />
     <Content Include="Views\Account\_LogIn.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\Account.cshtml" />
+    <Content Include="Views\Comics\Index.cshtml" />
+    <Content Include="Views\Comics\ComicList.cshtml" />
+    <Content Include="Views\Comics\Issue.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -229,7 +248,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyNextComic.Contracts\MyNextComic.Contracts.csproj">
-      <Project>{F2820FF1-C666-4CFF-B27E-CCFD781369BF}</Project>
+      <Project>{f2820ff1-c666-4cff-b27e-ccfd781369bf}</Project>
       <Name>MyNextComic.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyNextComic.Services\MyNextComic.Services.csproj">

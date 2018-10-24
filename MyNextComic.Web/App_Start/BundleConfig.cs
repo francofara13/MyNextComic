@@ -26,9 +26,10 @@ namespace MyNextComic.Web
                 "~/Scripts/Home/Home.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/Bundled.css"));
+                      "~/Content/Bundled.css",
+                      "~/Content/thumbnail-gallery.css",
+                      "~/Content/bootstrap.css"));
             
         }
     }

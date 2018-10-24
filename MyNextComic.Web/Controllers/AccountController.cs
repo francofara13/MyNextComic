@@ -20,26 +20,47 @@ namespace MyNextComic.Web.Controllers
         }
         public ActionResult LogIn(AccountModel model)
         {
-            var user = new User()
+            if (ModelState.IsValid)
             {
-                UserName = model.UserName,
-                Password = model.Password
-            };
-            var result = accountService.LogInUser(user);
+                var user = new User()
+                {
+                    UserName = model.UserName,
+                    Password = model.Password
+                };
+                var result = accountService.LogInUser(user);
 
-            return View("Index");
+                return RedirectToAction("Account", "Account");
+            }
+            else
+            {
+                return View("Index");
+            }
         }
-        public ActionResult SignUp(AccountModel model)
+        public ActionResult SignUp(SignupModel model)
         {
-            var user = new User()
+            if (ModelState.IsValid)
             {
-                UserName = model.UserName,
-                Password = model.Password,
-                Email = model.Email
-            };
-            var result = accountService.InsertUser(user);
+                var user = new User()
+                {
+                    UserName = model.UserName,
+                    Password = model.Password,
+                    Email = model.Email
+                };
+                var result = accountService.InsertUser(user);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View("Index");
+            }
+        }
 
-            return RedirectToAction("Index", "Home");
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult Account()
+        {
+
+            return View();
         }
     }
 }

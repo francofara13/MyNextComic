@@ -27,5 +27,20 @@ namespace MyNextComic.Data.Mappers
                 throw ex;
             }
         }
+
+        public Issue MapIssue(Comics comic)
+        {
+            var issue = new Issue
+            {
+                Id = comic.Id,
+                Name = comic.Name.Replace("\"", ""),
+                Description = comic.Description,
+                Image = new IssueImage { Original_Url = comic.Image },
+                Issue_Number = comic.Issue_Number,
+                Store_Date = comic.Release_date.ToString()
+            };
+
+            return issue;
+        }
     }
 }

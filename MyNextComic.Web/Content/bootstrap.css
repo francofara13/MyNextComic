@@ -501,7 +501,7 @@ mark,
 	border: 1px solid #dee2e6;
 	border-radius: 0;
 	max-width: 100%;
-	height: auto;
+	height: 300px;
 }
 
 .figure {
@@ -8264,12 +8264,20 @@ button.bg-dark:focus {
 	width: 100% !important;
 }
 
+.w-250px {
+	width: 250px !important;
+}
+
 .w-auto {
 	width: auto !important;
 }
 
 .h-25 {
 	height: 25% !important;
+}
+
+.h-35px {
+	height: 35px !important;
 }
 
 .h-50 {
