@@ -164,5 +164,92 @@ namespace MyNextComic.Services
             
             return result;
         }
+
+        public Issue GetComic(int id)
+        {
+            Issue result = null;
+            using (TransactionScope scope = new TransactionScope())
+            {
+                MyNextComicEntities context = null;
+
+                try
+                {
+                    context = new MyNextComicEntities();
+                    context.Configuration.AutoDetectChangesEnabled = false;
+
+                    var issue = context.Comics.Where(x => x.Id_Comic == id).ToList().FirstOrDefault();
+
+                    var mapper = new MyNextComicMapper();
+
+                    result = mapper.MapIssue(issue);
+                }
+                catch (DbEntityValidationException e)
+                {
+                }
+
+                context.Dispose();
+                scope.Complete();
+            }
+
+            return result;
+        }
+
+        public Genre GetGenres(int genreId)
+        {
+            Genre result = null;
+            using (TransactionScope scope = new TransactionScope())
+            {
+                MyNextComicEntities context = null;
+
+                try
+                {
+                    context = new MyNextComicEntities();
+                    context.Configuration.AutoDetectChangesEnabled = false;
+
+                    var genre = context.Genres.Where(x => x.IdGenre == genreId).ToList().FirstOrDefault();
+
+                    var mapper = new MyNextComicMapper();
+
+                    result = mapper.MapGenre(genre);
+
+                }
+                catch (DbEntityValidationException e)
+                {
+                }
+
+                context.Dispose();
+                scope.Complete();
+            }
+
+            return result;
+        }
+
+        public double GetRating(int comicId)
+        {
+            double result = 0;
+            using (TransactionScope scope = new TransactionScope())
+            {
+                MyNextComicEntities context = null;
+
+                try
+                {
+                    context = new MyNextComicEntities();
+                    context.Configuration.AutoDetectChangesEnabled = false;
+                    var values = context.Preferences.Where(x => x.ItemID == comicId).Select(x => x.Value).ToList();
+                    if (values.Count > 0)
+                    {
+                        result = values.Average();
+                    }
+                }
+                catch (DbEntityValidationException e)
+                {
+                }
+
+                context.Dispose();
+                scope.Complete();
+            }
+
+            return result;
+        }
     }
 }

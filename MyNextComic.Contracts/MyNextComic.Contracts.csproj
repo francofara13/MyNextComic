@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account\UserServiceResponse.cs" />
+    <Compile Include="Entities\Genre.cs" />
     <Compile Include="Entities\Issue.cs" />
     <Compile Include="Entities\IssueImage.cs" />
     <Compile Include="Entities\IssuesResponse.cs" />

@@ -27,5 +27,8 @@ namespace MyNextComic.Data
     
         public DbSet<Comics> Comics { get; set; }
         public DbSet<Users> Users { get; set; }
+        public DbSet<Genres> Genres { get; set; }
+        public DbSet<Preferences> Preferences { get; set; }
+        public DbSet<RatingValues> RatingValues { get; set; }
     }
 }

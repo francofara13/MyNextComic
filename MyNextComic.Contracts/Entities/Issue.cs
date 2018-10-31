@@ -14,5 +14,8 @@ namespace MyNextComic.Contracts.Entities
         public string Description { get; set; }
         public string Store_Date { get; set; }
         public IssueImage Image { get; set; }
+        public int? GenreId { get; set; }
+        public string GenreDescription { get; set; }
+        public double Rating { get; set; }
     }
 }

@@ -7,7 +7,7 @@
 	<div class="col-md-6">
 		<div class="card text-white">
 			<div class="card-header">LogIn</div>
-			<div class="card-body">
+			<div class="card-body" id="logInContainer">
 				@{Html.RenderPartial("_LogIn", new AccountModel());}
 			</div>
 		</div>
@@ -15,10 +15,12 @@
 	<div class="col-md-6">
 		<div class="card text-white">
 			<div class="card-header">SignUp</div>
-			<div class="card-body">
+			<div class="card-body" id="signUpContainer">
 				@{Html.RenderPartial("_SignUp", new SignupModel());}
 			</div>
 		</div>
 	</div>
 </div>
+
+<script src="~/Scripts/Account/Account.js" type="text/javascript"></script>
 

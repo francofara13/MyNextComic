@@ -30,7 +30,6 @@ namespace MyNextComic.Web
                       "~/Content/Bundled.css",
                       "~/Content/thumbnail-gallery.css",
                       "~/Content/bootstrap.css"));
-            
         }
     }
 }

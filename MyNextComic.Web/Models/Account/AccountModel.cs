@@ -12,5 +12,7 @@ namespace MyNextComic.Web.Models.Account
         [DisplayName("Contraseña")]
         [Required]
         public string Password { get; set; }
+
+        public string ModelError { get; set; }
     }
 }

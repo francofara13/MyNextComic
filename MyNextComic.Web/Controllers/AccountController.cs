@@ -29,11 +29,19 @@ namespace MyNextComic.Web.Controllers
                 };
                 var result = accountService.LogInUser(user);
 
-                return RedirectToAction("Account", "Account");
+                if (result.ErrorMessage == "")
+                {
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    model.ModelError = result.ErrorMessage;
+                    return PartialView("_LogIn", model);
+                }
             }
             else
             {
-                return View("Index");
+                return PartialView("_LogIn", model);
             }
         }
         public ActionResult SignUp(SignupModel model)
@@ -47,11 +55,19 @@ namespace MyNextComic.Web.Controllers
                     Email = model.Email
                 };
                 var result = accountService.InsertUser(user);
-                return RedirectToAction("Index", "Home");
+                if (result.Success)
+                {
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    model.ModelError = result.ErrorMessage;
+                    return PartialView("_SignUp", model);
+                }
             }
             else
             {
-                return View("Index");
+                return PartialView("_SignUp", model);
             }
         }
 

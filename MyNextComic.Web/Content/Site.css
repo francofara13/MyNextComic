@@ -75,3 +75,8 @@ textarea {
 .float-right {
 	float: right;
 }
+
+.issue-Image {
+	overflow: hidden;
+	position: relative;
+}

@@ -1,20 +1,43 @@
 ﻿@model MyNextComic.Contracts.Entities.Issue
 
 @Html.HiddenFor(x => x.Id)
-<div class="col-md-4">
-	<img src="@Model.Image.Original_Url.Replace('"', ' ')" alt="Model.Name">
-</div>
-<div class="col-md-8">
-	<h3 class="comic-title-big">@Model.Name</h3>
-	<div class="col-md-12">
-		<div class="row">
-			<span>Issue Number: </span>
-			<span>@Model.Issue_Number</span>
-			<span>Publish Date: </span>
-			<span>@Model.Store_Date</span>
+<div class="row">
+	<div class="col-md-4 issue-Image">
+		<img class="w-100" src="@Model.Image.Original_Url.Replace('"', ' ')" alt="Model.Name">
+	</div>
+	<div class="col-md-8">
+		<h3 class="comic-title-big">@Model.Name</h3>
+		<div class="col-md-12">
+			<div class="col-md-12">
+				<span>Issue Number: @Model.Issue_Number</span><br />
+			</div>
+			@if (Model.Store_Date != DateTime.MinValue.ToString())
+			{
+				<div class="col-md-12">
+					<span>Publish Date: @Model.Store_Date</span>
+				</div>
+			}
+			@if (Model.GenreDescription != null && Model.GenreDescription != string.Empty)
+			{
+				<div class="col-md-12">
+					<span>Genre: @Model.GenreDescription</span>
+				</div>
+			}
+			@if (Model.Rating != 0)
+			{
+				<div class="col-md-12">
+					<span>General Rating:</span>
+					<input id="input-3" name="input-3" value="@Model.Rating" class="rating-loading">
+				</div>
+			}
+		</div>
+		<div class="col-md-12">
+			@Html.Raw(Model.Description)
 		</div>
 	</div>
-	<div class="row">
-		<p>@Model.Description</p>
-	</div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('#input-3').rating({displayOnly: true});
+	});
+</script>

@@ -7,6 +7,9 @@
       <Diagram DiagramId="01088903f8dc471b80b063b3292404b4" Name="Diagram1">
         <EntityTypeShape EntityType="MyNextComicModel.Comics" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyNextComicModel.Users" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyNextComicModel.Genres" Width="1.5" PointX="3.75" PointY="3.75" />
+        <EntityTypeShape EntityType="MyNextComicModel.Preferences" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="MyNextComicModel.RatingValues" Width="1.5" PointX="5.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

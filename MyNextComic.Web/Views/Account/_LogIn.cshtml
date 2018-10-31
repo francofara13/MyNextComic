@@ -1,7 +1,7 @@
 ﻿@model MyNextComic.Web.Models.Account.AccountModel
 
-@using (Html.BeginForm("LogIn", "Account", FormMethod.Post))
-{
+
+<form id="LogInForm">
 	@Html.AntiForgeryToken()
 	<div class="col-md-12 form-group">
 		<span>@Html.LabelFor(x => x.UserName)</span><br />
@@ -10,10 +10,13 @@
 	</div>
 	<div class="col-md-12 form-group">
 		<span>@Html.LabelFor(x => x.Password)</span><br />
-		<span>@Html.TextBoxFor(x => x.UserName, new { Class = "col-md-8" })</span><br />
+		<span>@Html.TextBoxFor(x => x.Password, new { Class = "col-md-8", type = "password" })</span><br />
 		<span class="text-danger">@Html.ValidationMessageFor(x => x.Password)</span>
 	</div>
 	<div class="col-md-12 form-group">
-		<button class="btn btn-primary">Ingresar</button>
+		<a class="btn btn-primary" onclick="logInSubmit()">Ingresar</a>
 	</div>
-}
+	<div class="col-md-12" hidden="hidden" id="modelError">
+		<span class="text-danger">@Html.DisplayFor(x => x.ModelError)</span>
+	</div>
+</form>

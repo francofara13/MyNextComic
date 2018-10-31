@@ -16,6 +16,34 @@
           <Property Name="Name" Type="varchar(max)" />
           <Property Name="Release_date" Type="date" />
           <Property Name="Id_Comic" Type="int" Nullable="false" />
+          <Property Name="Genre" Type="int" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="IdGenre" />
+          </Key>
+          <Property Name="IdGenre" Type="int" Nullable="false" />
+          <Property Name="GenreDescription" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MyNextComic.dbo.Preferences' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Preferences">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="ItemID" />
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MyNextComic.dbo.RatingValues' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RatingValues">
+          <Key>
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="Value" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -28,7 +56,20 @@
         </EntityType>
         <EntityContainer Name="MyNextComicModelStoreContainer">
           <EntitySet Name="Comics" EntityType="Self.Comics" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Preferences" EntityType="Self.Preferences" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[Preferences].[UserID] AS [UserID], 
+[Preferences].[ItemID] AS [ItemID], 
+[Preferences].[Value] AS [Value]
+FROM [dbo].[Preferences] AS [Preferences]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="RatingValues" EntityType="Self.RatingValues" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[RatingValues].[Value] AS [Value]
+FROM [dbo].[RatingValues] AS [RatingValues]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -45,6 +86,7 @@
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Release_date" Type="DateTime" Precision="0" />
           <Property Name="Id_Comic" Type="Int32" Nullable="false" />
+          <Property Name="Genre" Type="Int32" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -58,7 +100,33 @@
         <EntityContainer Name="MyNextComicEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Comics" EntityType="Self.Comics" />
           <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Genres" EntityType="MyNextComicModel.Genres" />
+          <EntitySet Name="Preferences" EntityType="MyNextComicModel.Preferences" />
+          <EntitySet Name="RatingValues" EntityType="MyNextComicModel.RatingValues" />
         </EntityContainer>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="IdGenre" />
+          </Key>
+          <Property Name="IdGenre" Type="Int32" Nullable="false" />
+          <Property Name="GenreDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Preferences">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="ItemID" />
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RatingValues">
+          <Key>
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="Value" Type="Double" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -68,6 +136,7 @@
           <EntitySetMapping Name="Comics">
             <EntityTypeMapping TypeName="MyNextComicModel.Comics">
               <MappingFragment StoreEntitySet="Comics">
+                <ScalarProperty Name="Genre" ColumnName="Genre" />
                 <ScalarProperty Name="Id_Comic" ColumnName="Id_Comic" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -85,6 +154,30 @@
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="MyNextComicModel.Genres">
+              <MappingFragment StoreEntitySet="Genres">
+                <ScalarProperty Name="GenreDescription" ColumnName="GenreDescription" />
+                <ScalarProperty Name="IdGenre" ColumnName="IdGenre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Preferences">
+            <EntityTypeMapping TypeName="MyNextComicModel.Preferences">
+              <MappingFragment StoreEntitySet="Preferences">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RatingValues">
+            <EntityTypeMapping TypeName="MyNextComicModel.RatingValues">
+              <MappingFragment StoreEntitySet="RatingValues">
+                <ScalarProperty Name="Value" ColumnName="Value" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

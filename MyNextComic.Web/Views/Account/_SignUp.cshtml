@@ -1,7 +1,6 @@
 ﻿@model MyNextComic.Web.Models.Account.SignupModel
 
-@using (Html.BeginForm("SignUp", "Account", FormMethod.Post))
-{
+<form id="SignUpForm">
 	@Html.AntiForgeryToken()
 	<div class="col-md-12 form-group">
 		<span>@Html.LabelFor(x => x.UserName)</span><br />
@@ -19,6 +18,9 @@
 		<span class="text-danger">@Html.ValidationMessageFor(x => x.Email)</span>
 	</div>
 	<div class="col-md-12 form-group">
-		<button class="btn btn-primary">Registrarse</button>
+		<a class="btn btn-primary" onclick="signUpSubmit()">Registrarse</a>
 	</div>
-}
+	<div class="col-md-12" hidden="hidden" id="SignUpModelError">
+		<span class="text-danger">@Html.DisplayFor(x => x.ModelError)</span>
+	</div>
+</form>

@@ -52,6 +52,9 @@
     <Compile Include="Comics.cs">
       <DependentUpon>MyNextComicEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Genres.cs">
+      <DependentUpon>MyNextComicEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Mappers\MyNextComicMapper.cs" />
     <Compile Include="MyNextComicEntities.Context.cs">
       <AutoGen>True</AutoGen>
@@ -68,8 +71,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MyNextComicEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Preferences.cs">
+      <DependentUpon>MyNextComicEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RatingValues.cs">
+      <DependentUpon>MyNextComicEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Users.cs">
       <DependentUpon>MyNextComicEntities.tt</DependentUpon>
     </Compile>

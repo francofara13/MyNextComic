@@ -32,15 +32,27 @@ namespace MyNextComic.Data.Mappers
         {
             var issue = new Issue
             {
-                Id = comic.Id,
+                Id = comic.Id_Comic,
                 Name = comic.Name.Replace("\"", ""),
-                Description = comic.Description,
+                Description = comic.Description != null ? comic.Description.Replace("\"", "") : "",
                 Image = new IssueImage { Original_Url = comic.Image },
                 Issue_Number = comic.Issue_Number,
-                Store_Date = comic.Release_date.ToString()
+                Store_Date = comic.Release_date.ToString(),
+                GenreId = comic.Genre
             };
 
             return issue;
+        }
+
+        public Genre MapGenre(Genres genres)
+        {
+            var genre = new Genre
+            {
+                Id = genres.IdGenre,
+                Description = genres.GenreDescription
+            };
+
+            return genre;
         }
     }
 }

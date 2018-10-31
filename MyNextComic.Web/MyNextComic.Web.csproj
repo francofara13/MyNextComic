@@ -145,7 +145,28 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome\font-awesome.css" />
+    <Content Include="Content\font-awesome\font-awesome.min.css" />
+    <Content Include="Content\Fonts\fontawesome-webfont.svg" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\star-rating.css" />
+    <Content Include="Content\star-rating.min.css" />
+    <Content Include="Content\themes\krajee-fas\theme.css" />
+    <Content Include="Content\themes\krajee-fas\theme.js" />
+    <Content Include="Content\themes\krajee-fas\theme.min.css" />
+    <Content Include="Content\themes\krajee-fas\theme.min.js" />
+    <Content Include="Content\themes\krajee-fa\theme.css" />
+    <Content Include="Content\themes\krajee-fa\theme.js" />
+    <Content Include="Content\themes\krajee-fa\theme.min.css" />
+    <Content Include="Content\themes\krajee-fa\theme.min.js" />
+    <Content Include="Content\themes\krajee-svg\theme.css" />
+    <Content Include="Content\themes\krajee-svg\theme.js" />
+    <Content Include="Content\themes\krajee-svg\theme.min.css" />
+    <Content Include="Content\themes\krajee-svg\theme.min.js" />
+    <Content Include="Content\themes\krajee-uni\theme.css" />
+    <Content Include="Content\themes\krajee-uni\theme.js" />
+    <Content Include="Content\themes\krajee-uni\theme.min.css" />
+    <Content Include="Content\themes\krajee-uni\theme.min.js" />
     <Content Include="Content\thumbnail-gallery.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -154,6 +175,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="img\loading.gif" />
+    <Content Include="Scripts\Account\Account.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -183,6 +206,11 @@
     <Content Include="Content\Fonts\YEWBB___.ttf" />
     <Content Include="Content\Fonts\YEWBI___.ttf" />
     <Content Include="Content\Fonts\YEWBN___.ttf" />
+    <Content Include="Content\Fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-3.3.1-vsdoc.js" />
     <Content Include="Scripts\Home\Home.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -199,6 +227,25 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\star-rating\locales\ar.js" />
+    <Content Include="Scripts\star-rating\locales\bn.js" />
+    <Content Include="Scripts\star-rating\locales\de.js" />
+    <Content Include="Scripts\star-rating\locales\es.js" />
+    <Content Include="Scripts\star-rating\locales\fa.js" />
+    <Content Include="Scripts\star-rating\locales\fr.js" />
+    <Content Include="Scripts\star-rating\locales\it.js" />
+    <Content Include="Scripts\star-rating\locales\kk.js" />
+    <Content Include="Scripts\star-rating\locales\ko.js" />
+    <Content Include="Scripts\star-rating\locales\LANG.js" />
+    <Content Include="Scripts\star-rating\locales\pl.js" />
+    <Content Include="Scripts\star-rating\locales\pt-BR.js" />
+    <Content Include="Scripts\star-rating\locales\ro.js" />
+    <Content Include="Scripts\star-rating\locales\ru.js" />
+    <Content Include="Scripts\star-rating\locales\tr.js" />
+    <Content Include="Scripts\star-rating\locales\ua.js" />
+    <Content Include="Scripts\star-rating\locales\zh.js" />
+    <Content Include="Scripts\star-rating\star-rating.js" />
+    <Content Include="Scripts\star-rating\star-rating.min.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
