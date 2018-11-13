@@ -1,4 +1,6 @@
-﻿namespace MyNextComic.Contracts.Account
+﻿using System.Collections.Generic;
+
+namespace MyNextComic.Contracts.Account
 {
     public class User
     {
@@ -6,5 +8,6 @@
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
+        public IEnumerable<Entities.Issue> ComicList { get; set; }
     }
 }

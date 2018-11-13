@@ -134,11 +134,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account\AccountModel.cs" />
+    <Compile Include="Models\Account\AccountProfileModel.cs" />
     <Compile Include="Models\Comic\ComicGridModel.cs" />
     <Compile Include="Models\Account\SignupModel.cs" />
+    <Compile Include="Models\Home\HomeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Account\Account.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -284,6 +287,7 @@
     <Content Include="Views\Comics\Index.cshtml" />
     <Content Include="Views\Comics\ComicList.cshtml" />
     <Content Include="Views\Comics\Issue.cshtml" />
+    <Content Include="Views\Account\_UserComicList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,6 +1,7 @@
 ﻿using MyNextComic.Contracts.Account;
 using MyNextComic.Services;
 using MyNextComic.Web.Models.Account;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,17 @@ namespace MyNextComic.Web.Controllers
         // GET: Account
         public ActionResult Index()
         {
-            return View();
+            bool isAuthorized = Session["Authorized"] != null ? (bool)Session["Authorized"] : false;
+            if (isAuthorized)
+            {
+                return RedirectToAction("Account");
+            }
+            else
+            {
+                return View();
+            }
         }
+        
         public ActionResult LogIn(AccountModel model)
         {
             if (ModelState.IsValid)
@@ -31,6 +41,8 @@ namespace MyNextComic.Web.Controllers
 
                 if (result.ErrorMessage == "")
                 {
+                    Session["Authorized"] = true;
+                    Session["UserName"] = model.UserName;
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -44,6 +56,7 @@ namespace MyNextComic.Web.Controllers
                 return PartialView("_LogIn", model);
             }
         }
+
         public ActionResult SignUp(SignupModel model)
         {
             if (ModelState.IsValid)
@@ -57,6 +70,8 @@ namespace MyNextComic.Web.Controllers
                 var result = accountService.InsertUser(user);
                 if (result.Success)
                 {
+                    Session["Authorized"] = true;
+                    Session["UserName"] = model.UserName;
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -71,12 +86,33 @@ namespace MyNextComic.Web.Controllers
             }
         }
 
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        public ActionResult Account()
+        public ActionResult Account(AccountProfileModel model, int page = 1)
         {
+            bool isAuthorized = Session["Authorized"] != null ? (bool)Session["Authorized"] : false;
+            if (isAuthorized)
+            {
+                model.Name = (string)Session["UserName"];
+                var result = accountService.GetUserData(model.Name);
 
-            return View();
+                model.Email = result.Email;
+                model.ComicList = result.ComicList.ToPagedList(page, 4);
+
+                return Request.IsAjaxRequest()
+                ? (ActionResult)PartialView("_UserComicList", model.ComicList)
+                : View(model);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        public ActionResult LogOut()
+        {
+            Session["Authorized"] = false;
+            Session["UserName"] = null;
+
+            return RedirectToAction("Index","Home");
         }
     }
 }

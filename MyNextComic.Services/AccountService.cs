@@ -1,6 +1,9 @@
 ﻿using MyNextComic.Contracts.Account;
+using MyNextComic.Contracts.Entities;
 using MyNextComic.Data;
+using MyNextComic.Data.Mappers;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Security.Cryptography;
@@ -93,6 +96,57 @@ namespace MyNextComic.Services
                 {
                     result.Success = false;
                     result.ErrorMessage = e.Message;
+                }
+
+                scope.Complete();
+            }
+
+            return result;
+        }
+
+        public User GetUserData(string userName)
+        {
+            var result = new User();
+
+            using (TransactionScope scope = new TransactionScope())
+            {
+                MyNextComicEntities context = null;
+                try
+                {
+                    context = new MyNextComicEntities();
+                    context.Configuration.AutoDetectChangesEnabled = false;
+
+                    var storedUser = context.Users.Where(x => x.Username == userName).FirstOrDefault();
+                    if (storedUser != null)
+                    {
+                        result.UserId = storedUser.Id;
+                        result.UserName = storedUser.Username;
+                        result.Email = storedUser.Email;
+
+                        var preferences = context.Preferences.Where(x => x.UserID == storedUser.Id).ToList();
+                        var comicsIds = preferences.Select(x => x.ItemID ).ToList();
+                        if (preferences.Count() > 0)
+                        {
+                            var ratedComics = context.Comics.Where(x => comicsIds.Any(y => x.Id_Comic == y)).ToList();
+                            var mapper = new MyNextComicMapper();
+                            var issues = new List<Issue>();
+                            foreach (var comic in ratedComics)
+                            {
+                                var issue = mapper.MapIssue(comic);
+                                issue.Rating = preferences.Where(x => x.ItemID == comic.Id_Comic).FirstOrDefault().Value;
+                                issues.Add(issue);
+                            }
+
+                            result.ComicList = issues.AsEnumerable();
+                        }
+                    }
+                    else
+                    {
+                        context.Dispose();
+                    }
+                }
+                catch (DbEntityValidationException e)
+                {
                 }
 
                 scope.Complete();

@@ -5,39 +5,76 @@
 	<div class="col-md-4 issue-Image">
 		<img class="w-100" src="@Model.Image.Original_Url.Replace('"', ' ')" alt="Model.Name">
 	</div>
-	<div class="col-md-8">
-		<h3 class="comic-title-big">@Model.Name</h3>
-		<div class="col-md-12">
-			<div class="col-md-12">
-				<span>Issue Number: @Model.Issue_Number</span><br />
-			</div>
-			@if (Model.Store_Date != DateTime.MinValue.ToString())
-			{
-				<div class="col-md-12">
-					<span>Publish Date: @Model.Store_Date</span>
-				</div>
-			}
-			@if (Model.GenreDescription != null && Model.GenreDescription != string.Empty)
-			{
-				<div class="col-md-12">
-					<span>Genre: @Model.GenreDescription</span>
-				</div>
-			}
-			@if (Model.Rating != 0)
-			{
-				<div class="col-md-12">
-					<span>General Rating:</span>
-					<input id="input-3" name="input-3" value="@Model.Rating" class="rating-loading">
-				</div>
-			}
-		</div>
-		<div class="col-md-12">
-			@Html.Raw(Model.Description)
-		</div>
-	</div>
+    <div class="col-md-8">
+        <h3 class="comic-title-big">@Model.Name</h3>
+
+        <div class="col-md-12">
+            <span>Issue Number: @Model.Issue_Number</span><br />
+        </div>
+        @if (Model.Store_Date != DateTime.MinValue.ToString())
+        {
+            <div class="col-md-12">
+                <span>Publish Date: @Model.Store_Date</span>
+            </div>
+        }
+        @if (Model.GenreDescription != null && Model.GenreDescription != string.Empty)
+        {
+            <div class="col-md-12">
+                <span>Genre: @Model.GenreDescription</span>
+            </div>
+        }
+        @if (Model.Rating != 0)
+        {
+            <div class="col-md-12">
+                <span>General Rating:</span>
+                <input id="input-3" name="input-3" value="@Model.Rating" class="rating-loading">
+            </div>
+        }
+        @if (ViewBag.UserRating != null)
+        {
+            <div class="col-md-12">
+                <span>Your Rating:</span>
+                <input id="input-user" name="input-user" value="@ViewBag.UserRating" class="rating-loading">
+                
+            </div>
+            <div class="col-md-12">
+                <a class="btn btn-primary" id="UserRatingSubmit" onclick="SubmitUserRating()">Rate</a>
+                &nbsp;
+                <span hidden="hidden" id="SaveRatingMessage"></span>
+            </div>
+        }
+        <br />
+        <div class="col-md-12">
+            @Html.Raw(Model.Description)
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
-	$(document).ready(function () {
-		$('#input-3').rating({displayOnly: true});
-	});
+    $(document).ready(function () {
+        $("#SaveRatingMessage").prop("hidden", "hidden");
+        $('#input-3').rating({ displayOnly: true });
+        $('#input-user').rating();
+    });
+
+    function SubmitUserRating() {
+        var value = $("#input-user").val();
+        var idComic = $("#Id").val();
+        $.ajax({
+            url: "/Comics/RateComic",
+            data: { value: value, idComic: idComic },
+            type: "POST",
+            success: function (result) {
+                if (result) {
+                    $("#SaveRatingMessage").html("Success!")
+                    $("#SaveRatingMessage").removeClass("text-danger")
+                    $("#SaveRatingMessage").addClass("text-success")
+                } else {
+                    $("#SaveRatingMessage").html("We had a problem saving your rating")
+                    $("#SaveRatingMessage").removeClass("text-success")
+                    $("#SaveRatingMessage").addClass("text-danger")
+                }
+                $("#SaveRatingMessage").prop("hidden", "");
+            }
+        });
+    }
 </script>

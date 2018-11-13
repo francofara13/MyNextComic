@@ -125,7 +125,7 @@ namespace MyNextComic.Services
             return context;
         }
 
-        public List<Issue> GetComics(string searchString)
+        public List<Issue> GetComics(string searchString, int genre)
         {
             var result = new List<Issue>();
 
@@ -146,6 +146,10 @@ namespace MyNextComic.Services
                     {
                         comics = context.Comics.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).OrderBy(x => x.Id).ToList();
                     }
+                    if (genre != 0)
+                    {
+                        comics = comics.Where(x => x.Genre == genre).ToList();
+                    }
                     
                     var mapper = new MyNextComicMapper();
 
@@ -162,6 +166,49 @@ namespace MyNextComic.Services
                 scope.Complete();
             }
             
+            return result;
+        }
+
+        public List<Issue> GetTopComics()
+        {
+            var result = new List<Issue>();
+
+            using (TransactionScope scope = new TransactionScope())
+            {
+                MyNextComicEntities context = null;
+
+                try
+                {
+                    context = new MyNextComicEntities();
+                    context.Configuration.AutoDetectChangesEnabled = false;
+                    
+                    var comics = new List<Issue>();
+
+                    var preSelection = context.Preferences.GroupBy(x => new { ItemId = x.ItemID })
+                                                .Select(g => new { Id = g.Key.ItemId, Average = g.Average(y => y.Value) })
+                                                .OrderByDescending(x => x.Average).Take(8).ToList();
+                    var Ids = preSelection.Select(x => x.Id ).ToList();
+                    var comicsData = context.Comics.Where(x => Ids.Any(y => x.Id_Comic == y)).ToList();
+
+                    var mapper = new MyNextComicMapper();
+
+                    foreach (var comic in preSelection)
+                    {
+                        var mappedComic = mapper.MapIssue(comicsData.Where(x => x.Id_Comic == comic.Id).FirstOrDefault());
+                        mappedComic.Rating = Math.Round(comic.Average, 0, MidpointRounding.AwayFromZero);
+                        comics.Add(mappedComic);
+                    }
+
+                    result = comics;
+                }
+                catch (DbEntityValidationException e)
+                {
+                }
+
+                context.Dispose();
+                scope.Complete();
+            }
+
             return result;
         }
 
@@ -194,9 +241,9 @@ namespace MyNextComic.Services
             return result;
         }
 
-        public Genre GetGenres(int genreId)
+        public List<Genre> GetGenres(int? genreId = null)
         {
-            Genre result = null;
+            List<Genre> result = new List<Genre>();
             using (TransactionScope scope = new TransactionScope())
             {
                 MyNextComicEntities context = null;
@@ -205,13 +252,21 @@ namespace MyNextComic.Services
                 {
                     context = new MyNextComicEntities();
                     context.Configuration.AutoDetectChangesEnabled = false;
-
-                    var genre = context.Genres.Where(x => x.IdGenre == genreId).ToList().FirstOrDefault();
-
                     var mapper = new MyNextComicMapper();
 
-                    result = mapper.MapGenre(genre);
-
+                    if (genreId == null)
+                    {
+                        var generos = context.Genres.ToList();
+                        foreach (var genre in generos)
+                        {
+                            result.Add(mapper.MapGenre(genre));
+                        }
+                    }
+                    else
+                    {
+                        var genre = context.Genres.Where(x => x.IdGenre == genreId).ToList().FirstOrDefault();
+                        result.Add(mapper.MapGenre(genre));
+                    }
                 }
                 catch (DbEntityValidationException e)
                 {
@@ -240,6 +295,80 @@ namespace MyNextComic.Services
                     {
                         result = values.Average();
                     }
+                }
+                catch (DbEntityValidationException e)
+                {
+                }
+
+                context.Dispose();
+                scope.Complete();
+            }
+
+            return result;
+        }
+
+        public double GetUserRating(string userName, int comicId)
+        {
+            double result = 0;
+            using (TransactionScope scope = new TransactionScope())
+            {
+                MyNextComicEntities context = null;
+
+                try
+                {
+                    context = new MyNextComicEntities();
+                    context.Configuration.AutoDetectChangesEnabled = false;
+                    var userId = context.Users.Where(x => x.Username == userName).FirstOrDefault().Id;
+                    var values = context.Preferences.Where(x => x.ItemID == comicId && x.UserID == userId).Select(x => x.Value).ToList();
+                    if (values.Count > 0)
+                    {
+                        result = values.Average();
+                    }
+                }
+                catch (DbEntityValidationException e)
+                {
+                }
+
+                context.Dispose();
+                scope.Complete();
+            }
+
+            return result;
+        }
+
+        public bool SaveUserRating(string userName, int comicId, double value)
+        {
+            bool result = false;
+            using (TransactionScope scope = new TransactionScope())
+            {
+                MyNextComicEntities context = null;
+
+                try
+                {
+                    context = new MyNextComicEntities();
+                    context.Configuration.AutoDetectChangesEnabled = false;
+                    var userId = context.Users.Where(x => x.Username == userName).FirstOrDefault().Id;
+                    var preference = context.Preferences.Where(x => x.UserID == userId && x.ItemID == comicId).FirstOrDefault();
+
+                    if (preference != null)
+                    {
+                        preference.Value = value;
+                        context.Preferences.Attach(preference);
+                        var entry = context.Entry(preference);
+                        entry.Property(e => e.Value).IsModified = true;
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        context.Preferences.Add(new Preferences()
+                        {
+                            ItemID = comicId,
+                            UserID = userId,
+                            Value = value
+                        });
+                        context.SaveChanges();
+                    }
+                    result = true;
                 }
                 catch (DbEntityValidationException e)
                 {

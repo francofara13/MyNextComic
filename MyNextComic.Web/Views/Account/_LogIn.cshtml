@@ -1,22 +1,21 @@
 ﻿@model MyNextComic.Web.Models.Account.AccountModel
 
-
-<form id="LogInForm">
-	@Html.AntiForgeryToken()
-	<div class="col-md-12 form-group">
-		<span>@Html.LabelFor(x => x.UserName)</span><br />
-		<span>@Html.TextBoxFor(x => x.UserName, new { Class = "col-md-8" })</span><br />
-		<span class="text-danger">@Html.ValidationMessageFor(x => x.UserName)</span>
-	</div>
-	<div class="col-md-12 form-group">
-		<span>@Html.LabelFor(x => x.Password)</span><br />
-		<span>@Html.TextBoxFor(x => x.Password, new { Class = "col-md-8", type = "password" })</span><br />
-		<span class="text-danger">@Html.ValidationMessageFor(x => x.Password)</span>
-	</div>
-	<div class="col-md-12 form-group">
-		<a class="btn btn-primary" onclick="logInSubmit()">Ingresar</a>
-	</div>
-	<div class="col-md-12" hidden="hidden" id="modelError">
-		<span class="text-danger">@Html.DisplayFor(x => x.ModelError)</span>
-	</div>
+<form name="LogInForm" id="LogInForm">
+    @Html.AntiForgeryToken()
+    <div class="col-md-12 form-group">
+        <span>@Html.LabelFor(x => x.UserName)</span><br />
+        <span>@Html.TextBoxFor(x => x.UserName, new { Class = "col-md-8" })</span><br />
+        <span class="text-danger">@Html.ValidationMessageFor(x => x.UserName)</span>
+    </div>
+    <div class="col-md-12 form-group">
+        <span>@Html.LabelFor(x => x.Password)</span><br />
+        <span>@Html.TextBoxFor(x => x.Password, new { Class = "col-md-8", type = "password" })</span><br />
+        <span class="text-danger">@Html.ValidationMessageFor(x => x.Password)</span>
+    </div>
+    <div class="col-md-12 form-group">
+        <a class="btn btn-primary" onclick="logInSubmit()">Ingresar</a>
+    </div>
+    <div class="col-md-12" hidden="hidden" id="modelError">
+        <span class="text-danger">@Html.DisplayFor(x => x.ModelError)</span>
+    </div>
 </form>

@@ -25,17 +25,14 @@
           <Property Name="IdGenre" Type="int" Nullable="false" />
           <Property Name="GenreDescription" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MyNextComic.dbo.Preferences' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Preferences">
           <Key>
-            <PropertyRef Name="UserID" />
-            <PropertyRef Name="ItemID" />
-            <PropertyRef Name="Value" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="ItemID" Type="int" Nullable="false" />
           <Property Name="Value" Type="float" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MyNextComic.dbo.RatingValues' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -57,14 +54,8 @@ warning 6002: The table/view 'MyNextComic.dbo.RatingValues' does not have a prim
         <EntityContainer Name="MyNextComicModelStoreContainer">
           <EntitySet Name="Comics" EntityType="Self.Comics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Preferences" EntityType="Self.Preferences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Preferences" EntityType="Self.Preferences" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Preferences].[UserID] AS [UserID], 
-[Preferences].[ItemID] AS [ItemID], 
-[Preferences].[Value] AS [Value]
-FROM [dbo].[Preferences] AS [Preferences]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="RatingValues" EntityType="Self.RatingValues" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [RatingValues].[Value] AS [Value]
@@ -113,13 +104,12 @@ FROM [dbo].[RatingValues] AS [RatingValues]</DefiningQuery>
         </EntityType>
         <EntityType Name="Preferences">
           <Key>
-            <PropertyRef Name="UserID" />
-            <PropertyRef Name="ItemID" />
-            <PropertyRef Name="Value" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="ItemID" Type="Int32" Nullable="false" />
           <Property Name="Value" Type="Double" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="RatingValues">
           <Key>
@@ -168,6 +158,7 @@ FROM [dbo].[RatingValues] AS [RatingValues]</DefiningQuery>
           <EntitySetMapping Name="Preferences">
             <EntityTypeMapping TypeName="MyNextComicModel.Preferences">
               <MappingFragment StoreEntitySet="Preferences">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />

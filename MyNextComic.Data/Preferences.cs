@@ -17,5 +17,6 @@ namespace MyNextComic.Data
         public int UserID { get; set; }
         public int ItemID { get; set; }
         public double Value { get; set; }
+        public int Id { get; set; }
     }
 }

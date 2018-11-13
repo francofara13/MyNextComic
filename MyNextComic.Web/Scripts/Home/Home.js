@@ -49,9 +49,9 @@ function getUrlVars() {
 
 function search() {
     $.ajax({
-        url: "/Comics/Index?searchString=" + $('#SearchString').val(),
+        url: "/Comics/Index?searchString=" + $('#SearchString').val() + "&genre=" + $("#Genres").val(),
         success: function (result) {
-            ChangeUrl("index", "/Comics/Index?searchString=" + $('#SearchString').val());
+            ChangeUrl("index", "/Comics/Index?searchString=" + $('#SearchString').val() + "&genre=" + $("#Genres").val());
             $('#ComicList').html(result);
         }
     });
@@ -76,8 +76,27 @@ $(function () {
         } else {
             searchString = '&searchString=' + searchString;
         }
-        var url = $(this).attr('href') + searchString;
+        var genres = $("#Genres").val();
+        if (genres === undefined || genres === '') {
+            genres = '';
+        } else {
+            genres = '&genre=' + genres;
+        }
+        var url = $(this).attr('href') + searchString + genres;
         console.log(url);
+        $.ajax({
+            url: url,
+            success: function (result) {
+                ChangeUrl('index', url);
+                $('#ComicList').html(result);
+            }
+        });
+    });
+});
+
+$(function () {
+    $("#Genres").on("change", function () {
+        var url = window.location.origin + "/Comics/Index?searchString=" + $('#SearchString').val() + "&genre=" + $("#Genres").val();
         $.ajax({
             url: url,
             success: function (result) {

@@ -14,9 +14,27 @@ namespace MyNextComic.Services
         public string[,] Values { get; set; }
     }
 
+    public class ApiResponse
+    {
+        public Output output1 { get; set; }
+    }
+
+    public class Output
+    {
+        public string type { get; set; }
+        public Value value { get; set; }
+    }
+
+    public class Value
+    {
+        public string[] ColumnNames { get; set; }
+        public string[] ColumnTypes { get; set; }
+        public string[,] Values { get; set; }
+    }
+
     public class RecommenderService
     {
-        public async Task<string> GetRecommendation()
+        public async Task<string> GetRecommendation(int userId)
         {
             using (var client = new HttpClient())
             {
@@ -28,8 +46,8 @@ namespace MyNextComic.Services
                             "input1",
                             new StringTable()
                             {
-                                ColumnNames = new string[] {"UserID"},
-                                Values = new string[,] {  { "10" }  }
+                                ColumnNames = new string[] {"userid"},
+                                Values = new string[,] {  { userId.ToString() }  }
                             }
                         },
                     },
@@ -37,10 +55,10 @@ namespace MyNextComic.Services
                     {
                     }
                 };
-                const string apiKey = "DoOYOs6ypiJm4NQ4V729kZ2ivjCrWuWjVsD1rZDaQMIa8oQedLYBDo+7HNk9wLtqySdtXc0pSRz4HxPOLdA9Xw=="; // Replace this with the API key for the web service
+                const string apiKey = "T+RJskZhi6EEFqd9DNH/nl8KLvci7/pugxgnYAt++/XsFbnqsv9ddupXFmZp7+kXeN95HX2TMa794jHu4fCr9A=="; // Replace this with the API key for the web service
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
 
-                client.BaseAddress = new Uri("https://ussouthcentral.services.azureml.net/workspaces/9e5f64dd0fcb4c9aa765892c902ba23f/services/986ef7475b234d84ba986bdcd8efc9fa/execute?api-version=2.0&details=true");
+                client.BaseAddress = new Uri("https://ussouthcentral.services.azureml.net/workspaces/51fec8d6f8f445f1a5e16271c6f0069b/services/980dad73eb814dfcbb173eeb0c562ecd/execute?api-version=2.0&details=true");
 
                 // WARNING: The 'await' statement below can result in a deadlock if you are calling this code from the UI thread of an ASP.Net application.
                 // One way to address this would be to call ConfigureAwait(false) so that the execution does not attempt to resume on the original context.
@@ -50,13 +68,14 @@ namespace MyNextComic.Services
                 //      result = await DoSomeTask().ConfigureAwait(false)
 
 
-                HttpResponseMessage response = await client.PostAsJsonAsync("", scoreRequest).ConfigureAwait(false);
+                HttpResponseMessage response = await client.PostAsJsonAsync("", scoreRequest);
 
                 if (response.IsSuccessStatusCode)
                 {
                     string result = await response.Content.ReadAsStringAsync();
-                    
-                    return result;
+
+                    var test = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ApiResponse>>(result);
+                    return null;
                 }
                 else
                 {

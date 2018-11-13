@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>@ViewBag.Title - My ASP.NET Application</title>
+	<title>MyNextComic</title>
 	<link rel="stylesheet" href="~/Content/font-awesome/font-awesome.css">
 	@Scripts.Render("~/bundles/modernizr")
 	@Styles.Render("~/Content/css")
@@ -23,7 +23,10 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav">
-					<li class="nav-item dropdown">
+                    <li class="nav-item">
+						<a class="nav-link" href="../Index">Comics</a>
+					</li>
+					@*<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes <span class="caret"></span></a>
 						<div class="dropdown-menu" aria-labelledby="themes">
 							<a class="dropdown-item" href="../default/">Default</a>
@@ -47,17 +50,29 @@
 							<a class="dropdown-item" href="../4/superhero/_variables.scss">_variables.scss</a>
 							<a class="dropdown-item" href="../4/superhero/_bootswatch.scss">_bootswatch.scss</a>
 						</div>
-					</li>
+					</li>*@
 				</ul>
 
-				<ul class="nav navbar-nav ml-auto">
-					<li class="nav-item">
-						<a class="nav-link" href="http://builtwithbootstrap.com/" target="_blank">Built With Bootstrap</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="https://wrapbootstrap.com/?ref=bsw" target="_blank">WrapBootstrap</a>
-					</li>
-				</ul>
+                <ul class="nav navbar-nav ml-auto">
+                    @if (HttpContext.Current.Session["Authorized"] != null && (bool)HttpContext.Current.Session["Authorized"] == true)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="../Account/LogOut">Log Out <i class="fa fa-power-off"></i></a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="../Account/Index">Log In or Sign Up</a>
+                        </li>
+                    }
+                    @*<li class="nav-item">
+            <a class="nav-link" href="http://builtwithbootstrap.com/" target="_blank">Built With Bootstrap</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="https://wrapbootstrap.com/?ref=bsw" target="_blank">WrapBootstrap</a>
+        </li>*@
+                </ul>
 
 			</div>
 		</div>
@@ -65,9 +80,6 @@
 	<div class="container body-content">
 		@RenderBody()
 		<hr />
-		<footer>
-			<p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-		</footer>
 	</div>
 </body>
 </html>
