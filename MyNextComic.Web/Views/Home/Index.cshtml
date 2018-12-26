@@ -1,9 +1,28 @@
 ﻿@model MyNextComic.Web.Models.Home.HomeModel
 <div class="col-md-12">
+    <h3 class="comic-title-big">Welcome to MyNextComic!</h3>
+</div>
+<br />
+<div class="col-md-12">
     <div class="row">
-        <button class="btn btn-primary" onclick="getRecommendation()">Recommend Me</button>
+        <div class="col-md-6">
+            <span class="comic-title-large text-center">Start now getting some recommendations!</span>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary btn-lg btn-block" onclick="getRecommendation()">Recommend Me</button>
+        </div>
+        @if (HttpContext.Current.Session["Authorized"] == null)
+        {
+            <div class="col-md-3 row small">
+                <a href="../Account/Index">Sign up or Log in</a> to get custom recommendations based on your rated comics.
+            </div>
+        }
     </div>
 </div>
+<br />
+<div class="col-md-12" id="RecommendedComicsList">
+</div>
+<br />
 <br />
 <div class="col-md-12">
     <h3 class="comic-title-big">Top Rated Comics</h3>
@@ -19,3 +38,7 @@
         }
     </div>
 </div>
+
+<div id="spinner" style="display:none;">
+    <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px; color: #DF691A"></i>
+</div> 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -13,8 +15,11 @@ namespace MyNextComic.Services
         public string[] ColumnNames { get; set; }
         public string[,] Values { get; set; }
     }
-
-    public class ApiResponse
+    public class Response
+    {
+        public Results results { get; set; }
+    }
+    public class Results
     {
         public Output output1 { get; set; }
     }
@@ -34,7 +39,7 @@ namespace MyNextComic.Services
 
     public class RecommenderService
     {
-        public async Task<string> GetRecommendation(int userId)
+        public async Task<List<int>> GetRecommendation(int userId)
         {
             using (var client = new HttpClient())
             {
@@ -58,33 +63,38 @@ namespace MyNextComic.Services
                 const string apiKey = "T+RJskZhi6EEFqd9DNH/nl8KLvci7/pugxgnYAt++/XsFbnqsv9ddupXFmZp7+kXeN95HX2TMa794jHu4fCr9A=="; // Replace this with the API key for the web service
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
 
-                client.BaseAddress = new Uri("https://ussouthcentral.services.azureml.net/workspaces/51fec8d6f8f445f1a5e16271c6f0069b/services/980dad73eb814dfcbb173eeb0c562ecd/execute?api-version=2.0&details=true");
+                var uri = new Uri("https://ussouthcentral.services.azureml.net/workspaces/51fec8d6f8f445f1a5e16271c6f0069b/services/980dad73eb814dfcbb173eeb0c562ecd/execute?api-version=2.0&details=true");
 
-                // WARNING: The 'await' statement below can result in a deadlock if you are calling this code from the UI thread of an ASP.Net application.
-                // One way to address this would be to call ConfigureAwait(false) so that the execution does not attempt to resume on the original context.
-                // For instance, replace code such as:
-                //      result = await DoSomeTask()
-                // with the following:
-                //      result = await DoSomeTask().ConfigureAwait(false)
+                var stringScoreRequest = await Task.Run(() => JsonConvert.SerializeObject(scoreRequest));
+                var httpContent = new StringContent(stringScoreRequest, Encoding.UTF8, "application/json");
 
+                HttpResponseMessage apiResponse = await client.PostAsync(uri, httpContent);
 
-                HttpResponseMessage response = await client.PostAsJsonAsync("", scoreRequest);
-
-                if (response.IsSuccessStatusCode)
+                if (apiResponse.IsSuccessStatusCode)
                 {
-                    string result = await response.Content.ReadAsStringAsync();
+                    string stringResponse = await apiResponse.Content.ReadAsStringAsync();
+                    JObject result = JObject.Parse(stringResponse);
+                    var response = result.ToObject<Response>();
 
-                    var test = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ApiResponse>>(result);
-                    return null;
+                    List<int> comicsIds = new List<int>();
+
+                    foreach (var id in response.results.output1.value.Values)
+                    {
+                        comicsIds.Add(Convert.ToInt32(id));
+                    }
+
+                    comicsIds.RemoveAt(0);
+
+                    return comicsIds;
                 }
                 else
                 {
-                    Console.WriteLine(string.Format("The request failed with status code: {0}", response.StatusCode));
+                    Console.WriteLine(string.Format("The request failed with status code: {0}", apiResponse.StatusCode));
 
                     // Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
-                    Console.WriteLine(response.Headers.ToString());
+                    Console.WriteLine(apiResponse.Headers.ToString());
 
-                    string responseContent = await response.Content.ReadAsStringAsync();
+                    string responseContent = await apiResponse.Content.ReadAsStringAsync();
                     Console.WriteLine(responseContent);
 
                     return null;

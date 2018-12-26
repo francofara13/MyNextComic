@@ -125,7 +125,7 @@ namespace MyNextComic.Services
             return context;
         }
 
-        public List<Issue> GetComics(string searchString, int genre)
+        public List<Issue> GetComics(string searchString, int genre, List<int> ids)
         {
             var result = new List<Issue>();
 
@@ -138,17 +138,21 @@ namespace MyNextComic.Services
                     context = new MyNextComicEntities();
                     context.Configuration.AutoDetectChangesEnabled = false;
                     var comics = new List<Comics>();
-                    if (String.IsNullOrEmpty(searchString))
-                    {
-                        comics = context.Comics.OrderBy(x => x.Id).ToList();
-                    }
-                    else
+                    if (!string.IsNullOrEmpty(searchString))
                     {
                         comics = context.Comics.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).OrderBy(x => x.Id).ToList();
                     }
-                    if (genre != 0)
+                    else if (genre != 0)
                     {
-                        comics = comics.Where(x => x.Genre == genre).ToList();
+                        comics = context.Comics.Where(x => x.Genre == genre).ToList();
+                    }
+                    else if (ids.Count() > 0)
+                    {
+                        comics = context.Comics.Where(x => ids.Contains(x.Id_Comic)).ToList();
+                    }
+                    else
+                    {
+                        comics = context.Comics.OrderBy(x => x.Id).ToList();
                     }
                     
                     var mapper = new MyNextComicMapper();

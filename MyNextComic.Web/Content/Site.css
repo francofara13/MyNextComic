@@ -59,6 +59,11 @@ textarea {
 	font-size: small;
 }
 
+.comic-title-large {
+    font-family: 'Yew Basturd';
+    font-size: large;
+}
+
 .comic-title-big {
 	font-family: 'Yew Basturd';
 	font-size: xx-large;

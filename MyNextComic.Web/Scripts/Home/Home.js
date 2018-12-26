@@ -9,13 +9,14 @@
 }
 
 function getRecommendation() {
+    $.blockUI({ message: $("#spinner") });
     $.ajax({
         type: "GET",
         url: "../Home/GetRecommendation",
         success: function (result) {
-            alert(result);
+            $('#RecommendedComicsList').html(result);
         }
-    });
+    }).always($.unblockUI);
 }
 
 window.addEventListener("popstate", function (e) {

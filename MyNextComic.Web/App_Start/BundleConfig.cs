@@ -20,7 +20,8 @@ namespace MyNextComic.Web
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/blockUI.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/home").Include(
                 "~/Scripts/Home/Home.js"));

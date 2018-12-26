@@ -30,7 +30,7 @@ namespace MyNextComic.Web.Controllers
             generos.Where(x => x.Value == genre.ToString()).FirstOrDefault().Selected = true;
             ViewBag.genres = generos;
 
-            var result = comicService.GetComics(searchString, genre);
+            var result = comicService.GetComics(searchString, genre, new List<int>());
 
             return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("ComicList", result.ToPagedList(page, pageSize))
