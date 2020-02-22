@@ -95,7 +95,10 @@ namespace MyNextComic.Web.Controllers
                 var result = accountService.GetUserData(model.Name);
 
                 model.Email = result.Email;
-                model.ComicList = result.ComicList.ToPagedList(page, 4);
+                if (result.ComicList != null && result.ComicList.Count() > 0)
+                {
+                    model.ComicList = result.ComicList.ToPagedList(page, 4);
+                }
 
                 return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("_UserComicList", model.ComicList)

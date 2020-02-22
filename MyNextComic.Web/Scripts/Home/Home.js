@@ -49,13 +49,14 @@ function getUrlVars() {
 }
 
 function search() {
+    $.blockUI({ message: $("#spinner") });
     $.ajax({
         url: "/Comics/Index?searchString=" + $('#SearchString').val() + "&genre=" + $("#Genres").val(),
         success: function (result) {
             ChangeUrl("index", "/Comics/Index?searchString=" + $('#SearchString').val() + "&genre=" + $("#Genres").val());
             $('#ComicList').html(result);
         }
-    });
+    }).always($.unblockUI);
 }
 
 $(function () {
@@ -97,6 +98,7 @@ $(function () {
 
 $(function () {
     $("#Genres").on("change", function () {
+        $.blockUI({ message: $("#spinner") });
         var url = window.location.origin + "/Comics/Index?searchString=" + $('#SearchString').val() + "&genre=" + $("#Genres").val();
         $.ajax({
             url: url,
@@ -104,6 +106,6 @@ $(function () {
                 ChangeUrl('index', url);
                 $('#ComicList').html(result);
             }
-        });
+        }).always($.unblockUI);
     });
 });
