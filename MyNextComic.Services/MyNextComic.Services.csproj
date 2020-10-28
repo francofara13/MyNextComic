@@ -79,7 +79,7 @@
       <Name>MyNextComic.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyNextComic.Data\MyNextComic.Data.csproj">
-      <Project>{F1B7DD1A-11EA-41CF-80B1-CEA18AA950DD}</Project>
+      <Project>{f1b7dd1a-11ea-41cf-80b1-cea18aa950dd}</Project>
       <Name>MyNextComic.Data</Name>
     </ProjectReference>
   </ItemGroup>

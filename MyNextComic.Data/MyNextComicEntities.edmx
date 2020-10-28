@@ -50,7 +50,35 @@ warning 6002: The table/view 'MyNextComic.dbo.RatingValues' does not have a prim
           <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" />
         </EntityType>
+        <Association Name="FK_Comics_Genres">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="0..1" />
+          <End Role="Comics" Type="Self.Comics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="IdGenre" />
+            </Principal>
+            <Dependent Role="Comics">
+              <PropertyRef Name="Genre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Preferences_Comics' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Preferences_Comics" />-->
+        <Association Name="FK_Preferences_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Preferences" Type="Self.Preferences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Preferences">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="MyNextComicModelStoreContainer">
           <EntitySet Name="Comics" EntityType="Self.Comics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
@@ -61,6 +89,14 @@ warning 6002: The table/view 'MyNextComic.dbo.RatingValues' does not have a prim
 [RatingValues].[Value] AS [Value]
 FROM [dbo].[RatingValues] AS [RatingValues]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_Comics_Genres" Association="Self.FK_Comics_Genres">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Comics" EntitySet="Comics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Preferences_Users" Association="Self.FK_Preferences_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Preferences" EntitySet="Preferences" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -78,6 +114,7 @@ FROM [dbo].[RatingValues] AS [RatingValues]</DefiningQuery>
           <Property Name="Release_date" Type="DateTime" Precision="0" />
           <Property Name="Id_Comic" Type="Int32" Nullable="false" />
           <Property Name="Genre" Type="Int32" />
+          <NavigationProperty Name="Genres" Relationship="MyNextComicModel.FK_Comics_Genres" FromRole="Comics" ToRole="Genres" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -87,6 +124,8 @@ FROM [dbo].[RatingValues] AS [RatingValues]</DefiningQuery>
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsAdmin" Type="Boolean" />
+          <NavigationProperty Name="Preferences" Relationship="MyNextComicModel.FK_Preferences_Users" FromRole="Users" ToRole="Preferences" />
         </EntityType>
         <EntityContainer Name="MyNextComicEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Comics" EntityType="Self.Comics" />
@@ -94,6 +133,14 @@ FROM [dbo].[RatingValues] AS [RatingValues]</DefiningQuery>
           <EntitySet Name="Genres" EntityType="MyNextComicModel.Genres" />
           <EntitySet Name="Preferences" EntityType="MyNextComicModel.Preferences" />
           <EntitySet Name="RatingValues" EntityType="MyNextComicModel.RatingValues" />
+          <AssociationSet Name="FK_Comics_Genres" Association="MyNextComicModel.FK_Comics_Genres">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Comics" EntitySet="Comics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Preferences_Users" Association="MyNextComicModel.FK_Preferences_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Preferences" EntitySet="Preferences" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Genres">
           <Key>
@@ -101,6 +148,7 @@ FROM [dbo].[RatingValues] AS [RatingValues]</DefiningQuery>
           </Key>
           <Property Name="IdGenre" Type="Int32" Nullable="false" />
           <Property Name="GenreDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Comics" Relationship="MyNextComicModel.FK_Comics_Genres" FromRole="Genres" ToRole="Comics" />
         </EntityType>
         <EntityType Name="Preferences">
           <Key>
@@ -110,6 +158,7 @@ FROM [dbo].[RatingValues] AS [RatingValues]</DefiningQuery>
           <Property Name="ItemID" Type="Int32" Nullable="false" />
           <Property Name="Value" Type="Double" Nullable="false" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Users" Relationship="MyNextComicModel.FK_Preferences_Users" FromRole="Preferences" ToRole="Users" />
         </EntityType>
         <EntityType Name="RatingValues">
           <Key>
@@ -117,6 +166,30 @@ FROM [dbo].[RatingValues] AS [RatingValues]</DefiningQuery>
           </Key>
           <Property Name="Value" Type="Double" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Comics_Genres">
+          <End Type="MyNextComicModel.Genres" Role="Genres" Multiplicity="0..1" />
+          <End Type="MyNextComicModel.Comics" Role="Comics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="IdGenre" />
+            </Principal>
+            <Dependent Role="Comics">
+              <PropertyRef Name="Genre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Preferences_Users">
+          <End Type="MyNextComicModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="MyNextComicModel.Preferences" Role="Preferences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Preferences">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -140,6 +213,7 @@ FROM [dbo].[RatingValues] AS [RatingValues]</DefiningQuery>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="MyNextComicModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

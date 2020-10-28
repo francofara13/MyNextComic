@@ -18,13 +18,6 @@ namespace MyNextComic.Web.Controllers
             return View(model);
         }
 
-        public JsonResult InsertComics()
-        {
-            var result = comicService.InsertComics();
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
         public async Task<ActionResult> GetRecommendation()
         {
             var RecommenderService = new RecommenderService();

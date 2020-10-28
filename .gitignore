@@ -260,3 +260,7 @@ paket-files/
 __pycache__/
 *.pyc
 /MyNextComic.Services
+/MyNextComic.Contracts/ClassDiagram1.cd
+/MyNextComic.Data/ClassDiagram2.cd
+/MyNextComic.Data/ClassDiagram1.cd
+/MyNextComic.Web/ClassDiagram1.cd

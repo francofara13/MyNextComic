@@ -9,6 +9,7 @@
         <div class="row">
             <span>@Html.DisplayFor(x => x.Name)</span>
         </div>
+        <br />
         <div class="row">
             <span>Email:</span>
         </div>
@@ -16,6 +17,13 @@
             <span>@Html.DisplayFor(x => x.Email)</span>
         </div>
         <br />
+        @if (Model.ComicList != null)
+        {
+            <div class="row">
+                <button class="btn btn-primary" onclick="insertComics()">Cargar Comics</button>
+            </div>
+            <br />
+        }
         <div class="row">
             <a class="btn btn-primary" href="../Account/LogOut">Log Out</a>
         </div>

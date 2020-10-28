@@ -7,6 +7,7 @@ namespace MyNextComic.Web.Models.Account
     {
         public string Name { get; set; }
         public string Email { get; set; }
+        public bool IsAdmin { get; set; }
         public IPagedList<Contracts.Entities.Issue> ComicList { get; set; }
     }
 }

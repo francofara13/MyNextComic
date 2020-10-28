@@ -14,9 +14,17 @@ namespace MyNextComic.Data
     
     public partial class Users
     {
+        public Users()
+        {
+            this.Preferences = new HashSet<Preferences>();
+        }
+    
         public int Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public Nullable<bool> IsAdmin { get; set; }
+    
+        public virtual ICollection<Preferences> Preferences { get; set; }
     }
 }

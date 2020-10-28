@@ -13,6 +13,7 @@ namespace MyNextComic.Web.Controllers
     public class AccountController : Controller
     {
         AccountService accountService = new AccountService();
+        ComicService comicService = new ComicService();
 
         // GET: Account
         public ActionResult Index()
@@ -43,6 +44,7 @@ namespace MyNextComic.Web.Controllers
                 {
                     Session["Authorized"] = true;
                     Session["UserName"] = model.UserName;
+                    Session["IsAdmin"] = model.IsAdmin;
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -100,6 +102,11 @@ namespace MyNextComic.Web.Controllers
                     model.ComicList = result.ComicList.ToPagedList(page, 4);
                 }
 
+                bool isAdmin = (bool)Session["IsAdmin"];
+                if (isAdmin) {
+                    model.IsAdmin = true;
+                }
+
                 return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("_UserComicList", model.ComicList)
                 : View(model);
@@ -116,6 +123,13 @@ namespace MyNextComic.Web.Controllers
             Session["UserName"] = null;
 
             return RedirectToAction("Index","Home");
+        }
+
+        public JsonResult InsertComics()
+        {
+            var result = comicService.InsertComics();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

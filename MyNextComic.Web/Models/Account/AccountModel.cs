@@ -14,5 +14,7 @@ namespace MyNextComic.Web.Models.Account
         public string Password { get; set; }
 
         public string ModelError { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }

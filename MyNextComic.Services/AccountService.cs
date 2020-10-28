@@ -122,6 +122,7 @@ namespace MyNextComic.Services
                         result.UserId = storedUser.Id;
                         result.UserName = storedUser.Username;
                         result.Email = storedUser.Email;
+                        result.IsAdmin = (bool)storedUser.IsAdmin;
 
                         var preferences = context.Preferences.Where(x => x.UserID == storedUser.Id).ToList();
                         var comicsIds = preferences.Select(x => x.ItemID ).ToList();

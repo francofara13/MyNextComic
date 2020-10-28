@@ -22,5 +22,7 @@ namespace MyNextComic.Data
         public Nullable<System.DateTime> Release_date { get; set; }
         public int Id_Comic { get; set; }
         public Nullable<int> Genre { get; set; }
+    
+        public virtual Genres Genres { get; set; }
     }
 }

@@ -14,7 +14,14 @@ namespace MyNextComic.Data
     
     public partial class Genres
     {
+        public Genres()
+        {
+            this.Comics = new HashSet<Comics>();
+        }
+    
         public int IdGenre { get; set; }
         public string GenreDescription { get; set; }
+    
+        public virtual ICollection<Comics> Comics { get; set; }
     }
 }
