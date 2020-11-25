@@ -44,7 +44,6 @@ namespace MyNextComic.Web.Controllers
                 {
                     Session["Authorized"] = true;
                     Session["UserName"] = model.UserName;
-                    Session["IsAdmin"] = model.IsAdmin;
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -102,10 +101,7 @@ namespace MyNextComic.Web.Controllers
                     model.ComicList = result.ComicList.ToPagedList(page, 4);
                 }
 
-                bool isAdmin = (bool)Session["IsAdmin"];
-                if (isAdmin) {
-                    model.IsAdmin = true;
-                }
+                model.IsAdmin = result.IsAdmin;
 
                 return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("_UserComicList", model.ComicList)

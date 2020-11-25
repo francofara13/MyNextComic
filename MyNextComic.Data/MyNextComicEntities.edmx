@@ -35,7 +35,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'MyNextComic.dbo.RatingValues' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mynextcomicdb.dbo.RatingValues' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="RatingValues">
           <Key>
             <PropertyRef Name="Value" />
@@ -52,33 +52,6 @@ warning 6002: The table/view 'MyNextComic.dbo.RatingValues' does not have a prim
           <Property Name="Password" Type="varchar(max)" Nullable="false" />
           <Property Name="IsAdmin" Type="bit" />
         </EntityType>
-        <Association Name="FK_Comics_Genres">
-          <End Role="Genres" Type="Self.Genres" Multiplicity="0..1" />
-          <End Role="Comics" Type="Self.Comics" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Genres">
-              <PropertyRef Name="IdGenre" />
-            </Principal>
-            <Dependent Role="Comics">
-              <PropertyRef Name="Genre" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Preferences_Comics' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_Preferences_Comics" />-->
-        <Association Name="FK_Preferences_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Preferences" Type="Self.Preferences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Preferences">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="MyNextComicModelStoreContainer">
           <EntitySet Name="Comics" EntityType="Self.Comics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
@@ -89,14 +62,6 @@ warning 6035: The relationship 'FK_Preferences_Comics' has columns that are not 
 [RatingValues].[Value] AS [Value]
 FROM [dbo].[RatingValues] AS [RatingValues]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK_Comics_Genres" Association="Self.FK_Comics_Genres">
-            <End Role="Genres" EntitySet="Genres" />
-            <End Role="Comics" EntitySet="Comics" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Preferences_Users" Association="Self.FK_Preferences_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Preferences" EntitySet="Preferences" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->

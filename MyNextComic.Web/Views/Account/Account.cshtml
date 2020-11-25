@@ -17,7 +17,7 @@
             <span>@Html.DisplayFor(x => x.Email)</span>
         </div>
         <br />
-        @if (Model.ComicList != null)
+        @if (Model.IsAdmin != false)
         {
             <div class="row">
                 <button class="btn btn-primary" onclick="insertComics()">Cargar Comics</button>
