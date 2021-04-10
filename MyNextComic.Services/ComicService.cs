@@ -142,10 +142,6 @@ namespace MyNextComic.Services
                     {
                         comics = context.Comics.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).OrderBy(x => x.Id).ToList();
                     }
-                    else if (genre != 0)
-                    {
-                        comics = context.Comics.Where(x => x.Genre == genre).ToList();
-                    }
                     else if (ids.Count() > 0)
                     {
                         comics = context.Comics.Where(x => ids.Contains(x.Id_Comic)).ToList();
@@ -154,7 +150,12 @@ namespace MyNextComic.Services
                     {
                         comics = context.Comics.OrderBy(x => x.Id).ToList();
                     }
-                    
+
+                    if (genre != 0)
+                    {
+                        comics = comics.Where(x => x.Genre == genre).ToList();
+                    }
+
                     var mapper = new MyNextComicMapper();
 
                     foreach (var comic in comics)
@@ -188,18 +189,18 @@ namespace MyNextComic.Services
                     
                     var comics = new List<Issue>();
 
-                    var preSelection = context.Preferences.GroupBy(x => new { ItemId = x.ItemID })
-                                                .Select(g => new { Id = g.Key.ItemId, Average = g.Average(y => y.Value) })
-                                                .OrderByDescending(x => x.Average).Take(8).ToList();
-                    var Ids = preSelection.Select(x => x.Id ).ToList();
+                   
+                    var preSelection = context.Preferences.OrderBy(x => Guid.NewGuid()).Take(8).ToList();
+
+                    var Ids = preSelection.Select(x => x.ItemID).ToList();
                     var comicsData = context.Comics.Where(x => Ids.Any(y => x.Id_Comic == y)).ToList();
 
                     var mapper = new MyNextComicMapper();
 
                     foreach (var comic in preSelection)
                     {
-                        var mappedComic = mapper.MapIssue(comicsData.Where(x => x.Id_Comic == comic.Id).FirstOrDefault());
-                        mappedComic.Rating = Math.Round(comic.Average, 0, MidpointRounding.AwayFromZero);
+                        var mappedComic = mapper.MapIssue(comicsData.Where(x => x.Id_Comic == comic.ItemID).FirstOrDefault());
+                        mappedComic.Rating = Math.Round(comic.Value, 0, MidpointRounding.AwayFromZero);
                         comics.Add(mappedComic);
                     }
 

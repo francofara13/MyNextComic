@@ -2,6 +2,7 @@
 using MyNextComic.Web.Models.Home;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Collections.Generic;
 
 namespace MyNextComic.Web.Controllers
 {
@@ -29,8 +30,19 @@ namespace MyNextComic.Web.Controllers
                 var user = accountService.GetUserData(userName);
                 userId = user.UserId;
             }
-            var recommendations = await RecommenderService.GetRecommendation(userId);
-            var result = comicService.GetComics("", 0, recommendations);
+
+            List<Contracts.Entities.Issue> result;
+
+            if (userId == 0)
+            {
+                result = comicService.GetTopComics();
+                result.RemoveRange(5, 3);
+            }
+            else
+            {
+                var recommendations = await RecommenderService.GetRecommendation(userId);
+                result = comicService.GetComics("", 0, recommendations);
+            }
 
             var model = new HomeModel() { RecommendedComics = result };
 
